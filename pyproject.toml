@@ -1,0 +1,24 @@
+# pyproject.toml  (place this in the project root: C:\PWr in Space\Programming\Python\PyPep)
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PyPep"                  # Required
+version = "0.1.0"               # Required
+description = "My awesome Python package"
+requires-python = ">=3.9"        # Recommended
+authors = [{name = "Your Name", email = "you@example.com"}]
+
+# Optional but good to have
+readme = "README.md"
+license = {text = "MIT"}
+
+# This tells setuptools where to find the package (critical for src layout!)
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# Or equivalently (more explicit):
+# [tool.setuptools.packages]
+# find = {where = ["src"]}
