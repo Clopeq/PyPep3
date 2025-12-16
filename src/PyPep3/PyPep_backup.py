@@ -1,3 +1,4 @@
+from __future__ import annotations
 import cantera as ct
 
 
@@ -9,8 +10,9 @@ class Solution:
     def __call__(self) -> ct.Solution:
         return self._solution
         
-    def solve(self, fuel: ct.Quantity, ox: ct.Quantity) -> None:
-        mix = fuel+self._OF*ox
+    def solve(self, fuel: Phase, ox: Phase) -> None:
+        mix = fuel+ox
+        self.summarise()
         mix.equilibrate("HP")
         self._solution()
 
@@ -65,14 +67,15 @@ class Solution:
     
 
 class Phase():
-    def __init__(self, solution: ct.Solution, mass = None, moles = None, constant = "UV") -> None: 
-        self.state = solution.state
+    def __init__(self, solution: Solution, mass = None, moles = None, constant = "UV") -> None: 
+        self._ct_solution = solution()
         self._solution = solution
-        self._phase = ct.Quantity(solution)
+        self.state = self._ct_solution.state
+        self._phase = ct.Quantity(self._ct_solution)
 
         # A unique key to prevent adding phases with different species
         # definitions
-        self._id = hash((solution.name,) + tuple(solution.species_names))
+        self._id = hash((self._ct_solution.name,) + tuple(self._ct_solution.species_names))
 
         if mass is not None:
             self._mass = mass
@@ -98,7 +101,7 @@ class Phase():
         """
         if XY is None:
             XY = self._constant
-        self._solution.equilibrate(XY, *args, **kwargs)
+        self._ct_solution.equilibrate(XY, *args, **kwargs)
         self.state = self._phase.state
 
         
@@ -170,10 +173,10 @@ class Phase():
             U = self._phase.int_energy + other._phase.int_energy
             V = self._phase.volume + other._phase.volume
             if self._phase.basis == 'mass':
-                self._solution.UVY = U / m, V / m, Y
+                self._ct_solution.UVY = U / m, V / m, Y
             else:
                 n = self._moles + other._moles
-                self._solution.UVY = U / n, V / n, Y
+                self._ct_solution.UVY = U / n, V / n, Y
         else:  # self.constant == 'HP'
             dp_rel = 2 * abs(self.P - other.P) / (self.P + other.P)
             if dp_rel > 1.0e-7:
@@ -183,12 +186,12 @@ class Phase():
 
             H = self._phase.enthalpy + other._phase.enthalpy
             if self._phase.basis == 'mass':
-                self._solution.HPY = H / m, None, Y
+                self._ct_solution.HPY = H / m, None, Y
             else:
                 n = self._moles + other._moles
-                self._solution.HPY = H / n, None, Y
+                self._ct_solution.HPY = H / n, None, Y
 
-        self.state = self._solution.state
+        self.state = self._ct_solution.state
         self._mass = m
         return self
 
