@@ -119,16 +119,16 @@ ox = pep.Phase(solution)
 Define the chemical composition using the `comp` attribute:
 
 ```python
-# As a string (species:mole_fraction)
+# As a string (species:proportion)
 fuel.comp = "CH4:1"
 ox.comp = "O2:0.21, N2:0.79"
 
-# As a dictionary
+# As a dictionary (species:proportion)
 fuel.comp = {"CH4": 1.0}
 ox.comp = {"O2": 0.21, "N2": 0.79}
 ```
 
-**Note**: Fractions don't need to sum to 1; they are automatically normalized.
+**Note**: Values represent proportions (ratios) that are automatically normalized to mass fractions. They don't need to sum to 1.
 
 #### 4. Set Initial Conditions
 
@@ -177,7 +177,7 @@ print(f"Density: {gas.density} kg/m³")
 print(f"Enthalpy: {gas.h} J/kg")
 
 # Composition
-print(f"Composition: {gas.comp}")  # Dictionary of species:fraction
+print(f"Composition: {gas.comp}")  # Dictionary of species:mass_fraction
 
 # Performance parameters
 print(f"Specific heat ratio (γ): {gas.k}")
