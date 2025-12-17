@@ -243,7 +243,8 @@ PyPep3/
 │       └── ...
 ├── tests/
 │   └── tests.ipynb          # Usage examples and tests
-├── setup.py                 # Installation configuration
+├── setup.py                 # Installation configuration (legacy)
+├── pyproject.toml           # Modern Python project configuration
 └── README.md
 ```
 
