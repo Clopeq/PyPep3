@@ -30,12 +30,17 @@ class Solution:
         #elf._solution()
         return Phase(self)
     
+    def set_of_ratio(self, fuel: Phase, oxidizer: Phase, OF: float) -> None:
+        fuel.mass = 1
+        oxidizer.mass = OF
+    
     def ct_solution(self) -> ct.Solution:
         return self._solution
 
 
 class Phase(ct.Quantity):
     def __init__(self, solution: Solution, *args, **kwargs):
+        self._solution = solution
         super().__init__(solution.ct_solution(), *args, **kwargs)
     
     
@@ -61,3 +66,51 @@ class Phase(ct.Quantity):
     @property
     def comp(self):
         return self.mass_fraction_dict()
+    @comp.setter
+    def comp(self, composition) -> None:
+        self.Y = composition
+
+    def __iadd__(self, other):
+        if self._id != other._id:
+            raise ValueError(
+                'Cannot add Quantities with different phase '
+                f'definitions. {self._id} != {other._id}')
+        if self.constant != other.constant:
+            raise ValueError(
+                "Cannot add Quantities with different "
+                f"constant values. {self.constant} != {other.constant}")
+
+        m = self.mass + other.mass
+        Y = (self.Y * self.mass + other.Y * other.mass)
+        if self.constant == 'UV':
+            U = self.int_energy + other.int_energy
+            V = self.volume + other.volume
+            if self.basis == 'mass':
+                self._phase.UVY = U / m, V / m, Y
+            else:
+                n = self.moles + other.moles
+                self._phase.UVY = U / n, V / n, Y
+        else:  # self.constant == 'HP'
+            dp_rel = 2 * abs(self.P - other.P) / (self.P + other.P)
+            if dp_rel > 1.0e-7:
+                raise ValueError(
+                    'Cannot add Quantities at constant pressure when '
+                    f'pressure is not equal ({self.P} != {other.P})')
+
+            H = self.enthalpy + other.enthalpy
+            if self.basis == 'mass':
+                self._phase.HPY = H / m, None, Y
+            else:
+                n = self.moles + other.moles
+                self._phase.HPY = H / n, None, Y
+
+        self.state = self._phase.state
+        self.mass = m
+        return self
+
+    def __add__(self, other):
+        newquantity = Phase(self._solution, mass=self.mass, constant=self.constant)
+        newquantity.comp = self.comp
+        newquantity.TP = self.TP
+        newquantity += other
+        return newquantity
