@@ -1,6 +1,6 @@
 # PyPep3
 
-A Python implementation of [ProPep](http://www.propep.com/), a rocket propulsion performance prediction software. PyPep3 provides a simplified, Pythonic interface for performing chemical equilibrium calculations and analyzing rocket propellant combustion.
+A Python implementation of [ProPep](https://www.nakka-rocketry.net/th_prope.html), a rocket propulsion performance prediction software. PyPep3 provides a simplified, Pythonic interface for performing chemical equilibrium calculations and analyzing rocket propellant combustion.
 
 ## Overview
 
@@ -14,7 +14,7 @@ The package leverages the powerful [Cantera](https://cantera.org/) library for c
 
 ## About ProPep
 
-[ProPep](http://www.propep.com/) is a widely-used software tool in the rocket propulsion community for predicting the performance of rocket propellants. It calculates chemical equilibrium compositions and thermodynamic properties of combustion products. PyPep3 aims to provide similar functionality in a modern, open-source Python environment.
+[ProPep](https://www.nakka-rocketry.net/th_prope.html) is a widely-used software tool in the rocket propulsion community for predicting the performance of rocket propellants. It calculates chemical equilibrium compositions and thermodynamic properties of combustion products. PyPep3 aims to provide similar functionality in a modern, open-source Python environment.
 
 ## How It Works
 
@@ -259,7 +259,7 @@ This project is licensed under the MIT License.
 ## Acknowledgments
 
 - [Cantera](https://cantera.org/) - The chemical kinetics library powering PyPep3
-- [ProPep](http://www.propep.com/) - The original inspiration for this project
+- [ProPep](https://www.nakka-rocketry.net/th_prope.html) - The original inspiration for this project
 - [Rocketry_formulas](https://github.com/Clopeq/Rocketry_formulas) - Additional rocket propulsion calculations
 
 ## Related Resources
@@ -267,4 +267,4 @@ This project is licensed under the MIT License.
 - [Cantera Documentation](https://cantera.org/documentation/index.html)
 - [Cantera Python Examples](https://cantera.org/examples/python/index.html)
 - [NASA CEA](https://www.grc.nasa.gov/www/CEAWeb/) - Another popular chemical equilibrium tool
-- [ProPep Manual](http://www.propep.com/)
+- [ProPep Manual](https://www.nakka-rocketry.net/th_prope.html)
