@@ -36,11 +36,8 @@ pycea wraps Cantera's core classes (`Solution` and `Quantity`) to provide a more
 
 ### Input Files
 
-pycea uses Cantera's YAML input files, which contain thermodynamic data for chemical species. The package includes several standard input files in the `data/cantera/` directory, including:
-- `gri30.yaml`: GRI-Mech 3.0 natural gas combustion mechanism
-- `air.yaml`: Air and its components
-- `h2o2.yaml`: Hydrogen-oxygen system
-- And many more...
+pycea uses Cantera's YAML input files, which contain thermodynamic data for chemical species.
+By default, examples use the built-in `gri30.yaml` mechanism distributed with Cantera.
 
 You can also create custom input files with your own species and thermodynamic data.
 
@@ -238,13 +235,8 @@ pycea/
 │   └── pycea/
 │       ├── __init__.py
 │       └── PyPep.py         # Main module with Solution and Phase classes
-├── data/
-│   └── cantera/             # Thermodynamic input files
-│       ├── gri30.yaml
-│       ├── air.yaml
-│       └── ...
 ├── tests/
-│   └── tests.ipynb          # Usage examples and tests
+│   └── test_cea_package.py  # Minimal package test script
 ├── setup.py                 # Installation configuration (legacy)
 ├── pyproject.toml           # Modern Python project configuration
 └── README.md

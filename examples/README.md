@@ -9,7 +9,7 @@ from pycea import CEA, Species
 
 # Initialize calculator
 cea = CEA(
-    thermo_file="data/thermo.yaml",
+    thermo_file="gri30.yaml",
     chamber_pressure=30e5,      # 30 bar
     ambient_pressure=101325      # 1 atm
 )
@@ -39,8 +39,8 @@ Comprehensive examples demonstrating various propellant combinations:
 
 1. **Hydrogen + Oxygen (LH2/LOX)** - Classic high-performance propellant
 2. **Methane + Oxygen (CH4/LOX)** - Modern reusable rocket propellant
-3. **ABS + N2O** - Hybrid rocket propellant
-4. **Aluminum + Oxygen** - Metallized solid propellant
+3. **Propane + N2O** - Practical mixed oxidizer example
+4. **Ammonia + Oxygen** - Carbon-free combustion example
 5. **Pressure Study** - Effect of chamber pressure on performance
 6. **Custom Multi-Component** - Complex propellant mixtures
 
@@ -102,7 +102,7 @@ Contains all equilibrium properties and rocket performance parameters.
 | RP-1/O2 | 2.5-3 | 20-40 bar | 300-350 |
 | CH4/O2 | 3-4 | 20-40 bar | 350-380 |
 | N2O/HTPB | 6-8 | 10-20 bar | 230-260 |
-| ABS/N2O | 5-7 | 10-15 bar | 240-270 |
+| C3H8/N2O | 5-7 | 10-20 bar | 240-310 |
 
 ## Tips for Accurate Calculations
 
@@ -114,16 +114,16 @@ Contains all equilibrium properties and rocket performance parameters.
 
 ## Thermodynamic Databases
 
-pycea uses Cantera-compatible YAML thermodynamic databases. The default `thermo.yaml` should contain:
+pycea uses Cantera-compatible YAML thermodynamic databases. For quick start, use Cantera's built-in `gri30.yaml`.
 
 - Common gas species (H2, O2, N2, CO2, H2O, etc.)
 - Combustion products (CO, OH, H, O, etc.)
-- Specialized species (N2O, H2O2, ABS, etc.)
+- Optional specialized species (N2O, H2O2, custom fuels, etc.)
 - NASA polynomial coefficients for enthalpy and entropy
 
 ### Creating Custom Databases
 
-To add custom species, edit `thermo.yaml` following the Cantera format:
+To add custom species, provide your own mechanism file following the Cantera YAML format:
 
 ```yaml
 species:
@@ -141,7 +141,7 @@ species:
 
 **"Species not found in database"**
 - Check species name spelling matches database exactly
-- Verify species exists in your thermo.yaml file
+- Verify species exists in your selected mechanism file
 
 **"No compatible species found"**
 - Ensure database contains species with elements from your reactants

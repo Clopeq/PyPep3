@@ -15,7 +15,7 @@ Example:
     >>> 
     >>> # Initialize CEA calculator
     >>> cea = CEA(
-    ...     thermo_file="../data/thermo.yaml",
+    ...     thermo_file="gri30.yaml",
     ...     chamber_pressure=30e5,  # 30 bar
     ...     ambient_pressure=101325  # 1 atm
     ... )
@@ -243,7 +243,7 @@ class CEA:
     
     Example:
         >>> cea = CEA(
-        ...     thermo_file="../data/thermo.yaml",
+        ...     thermo_file="gri30.yaml",
         ...     chamber_pressure=30e5,
         ...     ambient_pressure=101325
         ... )
@@ -257,7 +257,7 @@ class CEA:
     
     def __init__(
         self,
-        thermo_file: str = "../data/thermo.yaml",
+        thermo_file: str = "gri30.yaml",
         chamber_pressure: float = 1e5,
         ambient_pressure: float = 101325
     ) -> None:

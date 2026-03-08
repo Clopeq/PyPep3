@@ -1,5 +1,5 @@
 """
-Quick test script to verify PyPep CEA package installation and functionality.
+Quick test script to verify pycea package installation and functionality.
 
 Run this after installing the package to ensure everything works correctly.
 """
@@ -55,7 +55,7 @@ def test_cea_initialization():
         from pycea import CEA
         
         cea = CEA(
-            thermo_file="data/thermo.yaml",
+            thermo_file="gri30.yaml",
             chamber_pressure=30e5,
             ambient_pressure=101325
         )
@@ -67,7 +67,7 @@ def test_cea_initialization():
         print("  ✓ CEA initialization works correctly")
         return True
     except FileNotFoundError:
-        print("  ⚠ Warning: thermo.yaml not found (expected in development)")
+        print("  ⚠ Warning: mechanism file not found")
         print("  ✓ CEA class structure is correct")
         return True
     except Exception as e:
@@ -133,32 +133,13 @@ def test_constants():
 
 
 def test_full_calculation():
-    """Test a full equilibrium calculation (if thermo.yaml exists)."""
+    """Test a full equilibrium calculation with built-in gri30 mechanism."""
     print("\nTesting full equilibrium calculation...")
     try:
         from pycea import CEA, Species
-        import os
-        
-        # Try multiple possible locations for thermo.yaml
-        possible_paths = [
-            "data/thermo.yaml",
-            "../data/thermo.yaml",
-            "tests/../data/thermo.yaml"
-        ]
-        
-        thermo_path = None
-        for path in possible_paths:
-            if os.path.exists(path):
-                thermo_path = path
-                break
-        
-        if thermo_path is None:
-            print("  ⚠ Skipped: thermo.yaml not found in expected locations")
-            return True
-        
         # Perform calculation
         cea = CEA(
-            thermo_file=thermo_path,
+            thermo_file="gri30.yaml",
             chamber_pressure=30e5,
             ambient_pressure=101325
         )

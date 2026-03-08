@@ -37,7 +37,7 @@ from pycea import CEA, Species
 
 # Setup calculator with chamber and ambient conditions
 cea = CEA(
-    thermo_file="data/thermo.yaml",
+    thermo_file="gri30.yaml",
     chamber_pressure=30e5,       # 30 bar
     ambient_pressure=101325       # 1 atm sea level
 )
@@ -113,7 +113,7 @@ Chemical Equilibrium Analysis calculator.
 
 ```python
 CEA(
-    thermo_file: str = "../data/thermo.yaml",
+    thermo_file: str = "gri30.yaml",
     chamber_pressure: float = 1e5,
     ambient_pressure: float = 101325
 )
@@ -190,7 +190,7 @@ isp_values = []
 
 for p_ch in pressures:
     cea = CEA(
-        thermo_file="data/thermo.yaml",
+        thermo_file="gri30.yaml",
         chamber_pressure=p_ch,
         ambient_pressure=101325
     )
@@ -276,7 +276,7 @@ python examples/cea_examples.py
 
 ## Thermodynamic Database
 
-pycea uses Cantera-compatible YAML databases. The default `data/thermo.yaml` contains:
+pycea uses Cantera-compatible YAML databases. The default mechanism is Cantera's built-in `gri30.yaml`.
 
 - NASA polynomials for enthalpy and entropy
 - 1000+ gas-phase species

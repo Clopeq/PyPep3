@@ -1,5 +1,5 @@
 """
-Example usage of the PyPep CEA (Chemical Equilibrium Analysis) module.
+Example usage of the pycea CEA (Chemical Equilibrium Analysis) module.
 
 This script demonstrates various combustion calculations for rocket propulsion,
 including common propellant combinations and custom mixtures.
@@ -22,7 +22,7 @@ def example_hydrogen_oxygen():
     
     # Initialize CEA with chamber pressure of 30 bar
     cea = CEA(
-        thermo_file="data/thermo.yaml",
+        thermo_file="gri30.yaml",
         chamber_pressure=30e5,  # 30 bar = 3 MPa
         ambient_pressure=101325  # 1 atm sea level
     )
@@ -49,7 +49,7 @@ def example_methane_oxygen():
     print("="*70)
     
     cea = CEA(
-        thermo_file="data/thermo.yaml",
+        thermo_file="gri30.yaml",
         chamber_pressure=30e5,
         ambient_pressure=101325
     )
@@ -67,21 +67,21 @@ def example_methane_oxygen():
     print(f"Expected Isp: ~350 s (Ideal: {results.isp:.1f} s)")
 
 
-def example_abs_n2o():
-    """Example: ABS (plastic) + Nitrous Oxide hybrid rocket."""
+def example_propane_n2o():
+    """Example: Propane + Nitrous Oxide combustion."""
     print("\n" + "="*70)
-    print("EXAMPLE 3: ABS + N2O Hybrid Rocket")
+    print("EXAMPLE 3: Propane + N2O")
     print("="*70)
     
     cea = CEA(
-        thermo_file="data/thermo.yaml",
+        thermo_file="gri30.yaml",
         chamber_pressure=10e5,  # 10 bar - typical for hybrids
         ambient_pressure=101325
     )
     
-    # ABS plastic fuel with N2O oxidizer, O/F ratio ~6:1
+    # Propane with N2O oxidizer, O/F ratio ~6:1
     cea.add_reactants([
-        Species("ABS", mass=1.0, temperature=298.15),  # ABS at room temp
+        Species("C3H8", mass=1.0, temperature=298.15),  # Propane at room temp
         Species("N2O", mass=6.0, temperature=298.15)   # Nitrous oxide at room temp
     ])
     
@@ -89,32 +89,31 @@ def example_abs_n2o():
     cea.print_results(n_products=10)
     
     print(f"\nMixture ratio (O/F): {cea.get_mixture_ratio():.2f}")
-    print(f"Typical hybrid Isp: ~250 s (Ideal: {results.isp:.1f} s)")
+    print(f"Predicted Isp: {results.isp:.1f} s")
 
 
-def example_aluminum_oxygen():
-    """Example: Aluminum + Oxygen combustion (solid rocket booster)."""
+def example_ammonia_oxygen():
+    """Example: Ammonia + Oxygen combustion."""
     print("\n" + "="*70)
-    print("EXAMPLE 4: Aluminum + Oxygen (Metallized Propellant)")
+    print("EXAMPLE 4: Ammonia + Oxygen")
     print("="*70)
     
     cea = CEA(
-        thermo_file="data/thermo.yaml",
+        thermo_file="gri30.yaml",
         chamber_pressure=50e5,  # 50 bar - high pressure solid rocket
         ambient_pressure=101325
     )
     
-    # Aluminum powder with oxygen
+    # Ammonia with oxygen
     cea.add_reactants([
-        Species("AL", mass=1.0, temperature=298.15),
-        Species("O2", mass=1.5, temperature=298.15)
+        Species("NH3", mass=1.0, temperature=298.15),
+        Species("O2", mass=1.2, temperature=298.15)
     ])
     
     results = cea.equilibrate()
     cea.print_results(n_products=10)
     
-    print(f"\nNote: Aluminum combustion produces very high temperatures")
-    print(f"and can form condensed phase products (Al2O3 particles).")
+    print(f"\nAmmonia combustion is useful for carbon-free propulsion studies.")
 
 
 def example_pressure_study():
@@ -130,7 +129,7 @@ def example_pressure_study():
     
     for p in pressures:
         cea = CEA(
-            thermo_file="data/thermo.yaml",
+            thermo_file="gri30.yaml",
             chamber_pressure=p,
             ambient_pressure=101325
         )
@@ -152,7 +151,7 @@ def example_custom_propellant():
     print("="*70)
     
     cea = CEA(
-        thermo_file="data/thermo.yaml",
+        thermo_file="gri30.yaml",
         chamber_pressure=30e5,
         ambient_pressure=101325
     )
@@ -178,8 +177,8 @@ def main():
     # Run examples
     example_hydrogen_oxygen()
     example_methane_oxygen()
-    example_abs_n2o()
-    example_aluminum_oxygen()
+    example_propane_n2o()
+    example_ammonia_oxygen()
     example_pressure_study()
     example_custom_propellant()
     
