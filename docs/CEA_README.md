@@ -276,7 +276,7 @@ python examples/cea_examples.py
 
 ## Thermodynamic Database
 
-PyPep uses Cantera-compatible YAML databases. The default `data/thermo.yaml` contains:
+pycea uses Cantera-compatible YAML databases. The default `data/thermo.yaml` contains:
 
 - NASA polynomials for enthalpy and entropy
 - 1000+ gas-phase species
@@ -341,7 +341,7 @@ Contributions welcome! Please:
 
 ## Citation
 
-If you use PyPep in your research, please cite:
+If you use pycea in your research, please cite:
 
 ```bibtex
 @software{pycea,

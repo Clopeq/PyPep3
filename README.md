@@ -1,10 +1,10 @@
-# PyPep3
+# pycea
 
-A Python implementation of [ProPep](https://www.nakka-rocketry.net/th_prope.html), a rocket propulsion performance prediction software. PyPep3 provides a simplified, Pythonic interface for performing chemical equilibrium calculations and analyzing rocket propellant combustion.
+A Python implementation of [ProPep](https://www.nakka-rocketry.net/th_prope.html), a rocket propulsion performance prediction software. pycea provides a simplified, Pythonic interface for performing chemical equilibrium calculations and analyzing rocket propellant combustion.
 
 ## Overview
 
-PyPep3 is designed to calculate thermodynamic properties of propellant combustion products, making it useful for:
+pycea is designed to calculate thermodynamic properties of propellant combustion products, making it useful for:
 - Rocket propulsion analysis and design
 - Combustion chamber performance prediction
 - Propellant selection and optimization
@@ -14,20 +14,20 @@ The package leverages the powerful [Cantera](https://cantera.org/) library for c
 
 ## About ProPep
 
-[ProPep](https://www.nakka-rocketry.net/th_prope.html) is a widely-used software tool in the rocket propulsion community for predicting the performance of rocket propellants. It calculates chemical equilibrium compositions and thermodynamic properties of combustion products. PyPep3 aims to provide similar functionality in a modern, open-source Python environment.
+[ProPep](https://www.nakka-rocketry.net/th_prope.html) is a widely-used software tool in the rocket propulsion community for predicting the performance of rocket propellants. It calculates chemical equilibrium compositions and thermodynamic properties of combustion products. pycea aims to provide similar functionality in a modern, open-source Python environment.
 
 ## How It Works
 
 ### Cantera Integration
 
-PyPep3 is built on top of [Cantera](https://cantera.org/), an open-source suite of tools for problems involving chemical kinetics, thermodynamics, and transport processes. Cantera provides:
+pycea is built on top of [Cantera](https://cantera.org/), an open-source suite of tools for problems involving chemical kinetics, thermodynamics, and transport processes. Cantera provides:
 
 - **Chemical equilibrium calculations**: Determines the equilibrium composition of reaction products by minimizing Gibbs free energy
 - **Thermodynamic properties**: Calculates temperature, pressure, enthalpy, entropy, specific heats, and other properties
 - **Species database**: Includes extensive thermodynamic data for hundreds of chemical species
 - **Phase models**: Supports gas, liquid, solid, and mixed-phase systems
 
-PyPep3 wraps Cantera's core classes (`Solution` and `Quantity`) to provide a more intuitive interface for rocket propulsion applications. The wrapper classes add convenient properties like:
+pycea wraps Cantera's core classes (`Solution` and `Quantity`) to provide a more intuitive interface for rocket propulsion applications. The wrapper classes add convenient properties like:
 - `k` (γ): Specific heat ratio (cp/cv)
 - `Rs`: Specific gas constant
 - `M`: Mean molecular weight
@@ -36,7 +36,7 @@ PyPep3 wraps Cantera's core classes (`Solution` and `Quantity`) to provide a mor
 
 ### Input Files
 
-PyPep3 uses Cantera's YAML input files, which contain thermodynamic data for chemical species. The package includes several standard input files in the `data/cantera/` directory, including:
+pycea uses Cantera's YAML input files, which contain thermodynamic data for chemical species. The package includes several standard input files in the `data/cantera/` directory, including:
 - `gri30.yaml`: GRI-Mech 3.0 natural gas combustion mechanism
 - `air.yaml`: Air and its components
 - `h2o2.yaml`: Hydrogen-oxygen system
@@ -46,21 +46,23 @@ You can also create custom input files with your own species and thermodynamic d
 
 ## Installation
 
-Install PyPep3 directly from GitHub using pip:
+Install pycea directly from GitHub using pip:
 
 ```bash
 pip install git+https://github.com/Clopeq/PyPep3.git
 ```
 
+Note: the repository URL currently contains `PyPep3`, but the installed package name/import is `pycea`.
+
 ### Dependencies
 
-PyPep3 requires the following packages:
+pycea requires the following packages:
 - `numpy`: Numerical computing
 - `scipy`: Scientific computing and constants
 - `cantera`: Chemical kinetics and thermodynamics library
 - `Rocketry_formulas`: Additional rocket propulsion formulas
 
-These dependencies will be installed automatically when you install PyPep3.
+These dependencies will be installed automatically when you install pycea.
 
 ## Usage
 
@@ -69,7 +71,7 @@ These dependencies will be installed automatically when you install PyPep3.
 Here's a minimal example calculating the adiabatic flame temperature of hydrogen and oxygen combustion:
 
 ```python
-import PyPep3 as pep
+import pycea as pep
 
 # Initialize solution and phases
 solution = pep.Solution()  # Uses default gri30.yaml
@@ -99,7 +101,7 @@ print(f"Characteristic velocity (c*): {gas.cstar:.1f} m/s")
 The `Solution` object manages thermodynamic calculations:
 
 ```python
-import PyPep3 as pep
+import pycea as pep
 
 solution = pep.Solution()               # Default input file
 solution = pep.Solution("gri30.yaml")   # Specify custom input file
@@ -193,7 +195,7 @@ print(f"cv: {gas.cv} J/kg-K")
 ### Complete Example: N₂O/ABS Hybrid Rocket
 
 ```python
-import PyPep3 as pep
+import pycea as pep
 
 # Initialize
 solution = pep.Solution()
@@ -231,9 +233,9 @@ print(f"cv: {gas.cv:.1f} J/kg-K")
 ## Project Structure
 
 ```
-PyPep3/
+pycea/
 ├── src/
-│   └── PyPep3/
+│   └── pycea/
 │       ├── __init__.py
 │       └── PyPep.py         # Main module with Solution and Phase classes
 ├── data/
@@ -258,7 +260,7 @@ This project is licensed under the MIT License.
 
 ## Acknowledgments
 
-- [Cantera](https://cantera.org/) - The chemical kinetics library powering PyPep3
+- [Cantera](https://cantera.org/) - The chemical kinetics library powering pycea
 - [ProPep](https://www.nakka-rocketry.net/th_prope.html) - The original inspiration for this project
 - [Rocketry_formulas](https://github.com/Clopeq/Rocketry_formulas) - Additional rocket propulsion calculations
 
