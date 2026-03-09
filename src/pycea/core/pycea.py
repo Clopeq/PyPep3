@@ -32,6 +32,8 @@ Example:
 """
 
 from typing import List, Optional
+from pathlib import Path
+from importlib import resources
 import numpy as np
 import cantera as ct
 from scipy.constants import R
@@ -259,7 +261,7 @@ class CEA:
         self,
         chamber_pressure: float = 10e5,
         ambient_pressure: float = 101325,
-        thermo_file: str = "../data/thermo.yaml"
+        thermo_file: str = "thermo.yaml"
     ) -> None:
         """
         Initialize Chemical Equilibrium Analysis calculator.
@@ -284,7 +286,9 @@ class CEA:
         
         # Load all available species from thermodynamic database
         try:
-            self.species_all: List = ct.Species.list_from_file(thermo_file)
+            resolved_path = self._resolve_thermo_file(thermo_file)
+            self.species_all: List = ct.Species.list_from_file(str(resolved_path))
+            self.thermo_file = str(resolved_path)
         except Exception as e:
             raise FileNotFoundError(
                 f"Could not load thermodynamic database '{thermo_file}': {e}"
@@ -292,6 +296,38 @@ class CEA:
         
         self.reactants: List[Species] = []
         self.results: Optional[Results] = None
+
+    @staticmethod
+    def _resolve_thermo_file(thermo_file: str) -> Path:
+        """
+        Resolve thermodynamic database location across source and installed usage.
+
+        Resolution order:
+        1. Exact path provided by user (absolute or CWD-relative)
+        2. Path relative to this module directory
+        3. Packaged file under ``pycea/data`` (installed package)
+        """
+        file_path = Path(thermo_file)
+
+        # 1) Exact path provided by the user
+        if file_path.is_file():
+            return file_path.resolve()
+
+        # 2) Relative to this source file
+        module_relative = (Path(__file__).resolve().parent / file_path)
+        if module_relative.is_file():
+            return module_relative.resolve()
+
+        # 3) Packaged data path (works after pip install)
+        package_candidate = resources.files("pycea").joinpath("data", file_path.name)
+        if package_candidate.is_file():
+            with resources.as_file(package_candidate) as extracted:
+                return extracted.resolve()
+
+        raise FileNotFoundError(
+            "Could not resolve thermodynamic database file. "
+            f"Tried '{thermo_file}', '{module_relative}', and package data 'pycea/data/{file_path.name}'."
+        )
     
     def add_reactant(self, species: Species) -> None:
         """
