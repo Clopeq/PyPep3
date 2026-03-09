@@ -13,7 +13,6 @@ authors = [{name = "Sebastian Król", email = "sebastiankrol@zsleji.pl"}]
 dependencies = [
     "numpy",
     "scipy",
-    "csv",
     "Rocketry_formulas @ git+https://github.com/Clopeq/Rocketry_formulas.git"
 ]
 
