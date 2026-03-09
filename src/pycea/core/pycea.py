@@ -475,23 +475,34 @@ class CEA:
             print(f"  {i:2d}. {name:15s}  {mass_frac:.6e}")
         print()
     
-    def get_mixture_ratio(self) -> Optional[float]:
-        """
-        Calculate oxidizer-to-fuel mass ratio (O/F ratio).
-        
-        This is a simplified calculation that assumes the first reactant
-        is fuel and subsequent reactants are oxidizers.
-        
-        Returns:
-            O/F ratio, or None if fewer than 2 reactants.
-        """
-        if len(self.reactants) < 2:
-            return None
-        
-        fuel_mass = self.reactants[0].mass
-        oxidizer_mass = sum(r.mass for r in self.reactants[1:])
-        
-        return oxidizer_mass / fuel_mass if fuel_mass > 0 else None
+    @property
+    def list_species(self):
+        return self.species_all
+    
+    @property
+    def n_species(self):
+        return len(self.species_all)
+    
+    @property
+    def rectant_mass(self):
+        return sum(r.mass for r in self.reactants)
+    
+    # Short aliases for convenience
+    @property
+    def p_ch(self) -> float:
+        return self.chamber_pressure
 
+    @p_ch.setter
+    def p_ch(self, value: float) -> None:
+        self.chamber_pressure = value
+
+    @property
+    def p_a(self) -> float:
+        return self.ambient_pressure
+
+    @p_a.setter
+    def p_a(self, value: float) -> None:
+        self.ambient_pressure = value
+    
 
 __all__ = ["Species", "Results", "CEA"]
